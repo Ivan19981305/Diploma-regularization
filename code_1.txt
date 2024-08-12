@@ -1,0 +1,1 @@
+lm(price ~ sqft_living + bedrooms, data=house_train_data)$coef

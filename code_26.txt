@@ -1,0 +1,5 @@
+x = model.matrix(price ˜ sqft_living + bedrooms, data = house_train_data)[,
+	-1]
+y = house_train_data$price
+lasso_model = glmnet(x, y, alpha = 1, lambda = 0, thresh = 1e-07)
+predict(lasso_model, type = "coefficients", s = 0, exact = T)[1:3]

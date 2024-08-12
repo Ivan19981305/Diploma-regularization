@@ -1,0 +1,6 @@
+ridge_model_lambda_1e5 <- glmnet(x = feature_matrix,
+	y = output_matrix,
+	alpha = 0,
+	lambda = 1e+5,
+	thresh=1e-8)
+glm_ridge_1e5_coef <- coef(ridge_model_lambda_1e5)[, 1]

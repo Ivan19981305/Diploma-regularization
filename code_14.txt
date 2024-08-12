@@ -1,0 +1,4 @@
+cv_ridge = cv.glmnet(x = train_features,
+	y = train_output,
+	alpha=0)
+ideal_lambda=min(cv_ridge$lambda)

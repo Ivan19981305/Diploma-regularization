@@ -1,0 +1,6 @@
+get_ro <- function(feature_matrix, output, weights, i) {
+	prediction = predict_output(feature_matrix, weights)
+	feature_i = feature_matrix[[1]][, i]
+	ro_i = sum(feature_i * (output - prediction + weights[i] * feature_i))
+	return(ro_i)
+}

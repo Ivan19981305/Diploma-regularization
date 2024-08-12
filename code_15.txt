@@ -1,0 +1,6 @@
+ridge_predict = predict(ridge_model_train,
+	s=ideal_lambda,
+	newx = test_features,
+	exact = TRUE)
+MSE_ideal_lambda = 
+	mean((ridge_predict - test_output)^2)

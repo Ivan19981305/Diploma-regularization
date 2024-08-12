@@ -1,0 +1,7 @@
+construct_features_matrix <- function(features, outputs, data) {
+	features <- as.list(features)
+	data_features <- get_features(data, features)
+	output_data <- get_features(data, outputs)
+	features_data <- add_constant_term(data_features)
+	list(features_data, output_data)
+}

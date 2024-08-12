@@ -1,0 +1,5 @@
+add_constant_term <- function(data_features){
+	length <- nrow(data_features)
+	combined <- cbind(rep(1, length), data_features)
+	combined
+}

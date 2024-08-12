@@ -1,0 +1,7 @@
+get_features <- function(data, features){
+	selected_features <- matrix(nrow = nrow(data), ncol = length(features))
+	for (i in 1: length(features)){
+		selected_features[,i] <- as.numeric(data[[features[[i]]]])
+	}
+	selected_features
+}

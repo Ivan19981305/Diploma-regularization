@@ -1,0 +1,11 @@
+normalize_features <- function(feature_Matrix) {
+	norms <- as.numeric(vector(length = ncol(feature_Matrix)))
+	normalized_features <- matrix(nrow = nrow(feature_Matrix),
+		ncol = ncol(feature_Matrix))
+	for (i in 1:ncol(feature_Matrix)) {
+		v <- feature_Matrix[, i]
+		norms[i] <- sqrt(sum(v^2))
+		normalized_features[, i] <- feature_Matrix[, i]/norms[i]
+	}
+	list(normalized_features, norms)
+}

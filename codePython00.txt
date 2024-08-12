@@ -1,0 +1,8 @@
+import csv
+symptoms = dict()
+with open('Symptom-severity.csv', newline='') as csvfile:
+    symptomsreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+    for row in symptomsreader:
+        symptom, weight = row[0].split(',')
+        if (symptom != "Symptom"):
+            symptoms[symptom] = int(weight)

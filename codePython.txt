@@ -1,0 +1,69 @@
+import csv
+
+symptoms = dict()
+
+with open('Symptom-severity.csv', newline='') as csvfile:
+    symptomsreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+    for row in symptomsreader:
+        symptom, weight = row[0].split(',')
+        if (symptom != "Symptom"):
+            symptoms[symptom] = int(weight)
+
+diseaseSymptoms = list()
+disease = list()
+
+def to_vec(old_list):
+    new_list = list()
+    for symptom in symptoms.keys():
+        if old_list.count(symptom) > 0:
+            new_list.append(symptoms[symptom])
+        else:
+            new_list.append(0)
+    return new_list
+
+with open('dataset.csv', newline='') as csvfile:
+    datasetreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+    for row in datasetreader:
+        new_row = list()
+        for smth in row:
+            new_smth = smth.strip()
+            if (new_smth != ''):
+                new_row.append(new_smth)
+        if (new_row[0] != 'Disease'):
+            disease.append(new_row[0])
+            diseaseSymptoms.append(to_vec(new_row[1:]))
+
+from sklearn.model_selection import train_test_split
+
+features_train, features_test, target_train, target_test = train_test_split(
+    diseaseSymptoms, disease, test_size=0.98)
+
+import numpy as np
+from sklearn.linear_model import SGDClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
+clf = make_pipeline(StandardScaler(), SGDClassifier(max_iter=1000, penalty = 'none'))
+clf.fit(features_train, target_train)
+
+clf2 = make_pipeline(StandardScaler(), SGDClassifier(max_iter=1000, penalty = 'l1'))
+clf2.fit(features_train, target_train)
+
+clf3 = make_pipeline(StandardScaler(), SGDClassifier(max_iter=1000, penalty = 'l2'))
+clf3.fit(features_train, target_train)
+
+from sklearn.metrics import accuracy_score
+
+mytest = ['fatigue', 'loss_of_smell', 'obesity', 'excessive_hunger', 'increased_appetite', 'cough']
+print(clf.predict([to_vec(mytest)]))
+print(clf2.predict([to_vec(mytest)]))
+print(clf3.predict([to_vec(mytest)]))
+
+print(accuracy_score(clf.predict(features_train), target_train))
+print(accuracy_score(clf.predict(features_test), target_test))
+
+print(accuracy_score(clf2.predict(features_train), target_train))
+print(accuracy_score(clf2.predict(features_test), target_test))
+
+print(accuracy_score(clf3.predict(features_train), target_train))
+print(accuracy_score(clf3.predict(features_test), target_test))

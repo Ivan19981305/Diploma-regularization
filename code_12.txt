@@ -1,0 +1,11 @@
+train_features = 
+	as.matrix(data.frame(scale(house_train_data[,
+features])))
+train_output = 
+	as.matrix(data.frame(scale(house_train_data[,
+target])))
+test_features = 
+	as.matrix(data.frame(scale(house_test_data[,
+features])))
+test_output = 
+	as.matrix(data.frame(scale(house_test_data[, target])))

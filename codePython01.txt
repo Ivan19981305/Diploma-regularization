@@ -1,0 +1,8 @@
+def to_vec(old_list):
+    new_list = list()
+    for symptom in symptoms.keys():
+        if old_list.count(symptom) > 0:
+            new_list.append(symptoms[symptom])
+        else:
+            new_list.append(0)
+    return new_list

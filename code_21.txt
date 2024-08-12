@@ -1,0 +1,4 @@
+predict_output <- function(feature_matrix, weights){
+	predictions<-feature_matrix[[1]]%*%weights
+	predictions
+}

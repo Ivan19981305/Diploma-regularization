@@ -1,0 +1,2 @@
+	thresh=1e-8)
+glm_ridge_0_coef <- coef(ridge_model_lambda_0)[, 1]

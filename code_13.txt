@@ -1,0 +1,9 @@
+ridge_model_train <- glmnet(x = train_features,
+	y = train_output,
+	alpha=0,
+	lambda = 0)
+ridge_predict = predict(ridge_model_train,
+	newx = test_features,
+	s = 10,
+	exact = TRUE)
+MSE_lambda_10 = mean((ridge_predict - test_output)^2)

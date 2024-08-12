@@ -1,0 +1,14 @@
+diseaseSymptoms = list()
+disease = list()
+
+with open('dataset.csv', newline='') as csvfile:
+    datasetreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+    for row in datasetreader:
+        new_row = list()
+        for smth in row:
+            new_smth = smth.strip()
+            if (new_smth != ''):
+                new_row.append(new_smth)
+        if (new_row[0] != 'Disease'):
+            disease.append(new_row[0])
+            diseaseSymptoms.append(to_vec(new_row[1:]))

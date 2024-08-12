@@ -1,0 +1,5 @@
+from sklearn.metrics import confusion_matrix
+
+print(confusion_matrix(target_test, clf.predict(features_test))/len(target_test))
+print(confusion_matrix(target_test, clf2.predict(features_test))/len(target_test))
+print(confusion_matrix(target_test, clf3.predict(features_test))/len(target_test))

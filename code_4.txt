@@ -1,0 +1,35 @@
+ridge_regression_gradient_descent = 
+			function(feature_matrix, output,
+    initial_weights, step_size, l2_penalty, tolerance) {
+    converged = FALSE
+    weights = matrix(initial_weights)
+    j = 0
+    while (!converged) {
+        predictions = predict_output(feature_matrix, weights)
+        errors = predictions - output
+        # Loop over each feature weight
+        for (i in 1:length(weights)) {
+            if (i == 1) {
+                gradient = 
+			2 * (feature_matrix[, i] %*% errors)
+                gradient_norm = sqrt(sum(gradient^2))
+                weights[1, 1] = 
+			weights[1, 1] - (step_size * gradient)
+            } else {
+                gradient = 
+			2 * (feature_matrix[, i] %*% errors) +
+                	2 * (l2_penalty * weights[i, 1])
+                gradient_norm = sqrt(sum(gradient^2))
+                if (gradient_norm < tolerance) {
+                    converged = TRUE
+                }
+                weights[i, 1] =
+			weights[i, 1] - (step_size * gradient)
+            }
+        }
+        j = j + 1
+    }
+    print(paste0("Gradient descent converged at iteration:", 
+	j - 1))
+    return(weights)
+}

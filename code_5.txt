@@ -1,0 +1,19 @@
+features <- c("sqft_living", "bedrooms")
+target <- "price"
+train_data <- house_train_data[, c(features, target)]
+feature_matrix = data_matrix(train_data,
+    features,
+    target)[[1]]
+output_matrix = data_matrix(train_data,
+    features,
+    target)[[2]]
+initial_weights = c(0, 0, 0)
+step_size = 1e-6
+tolerance = 1e-8
+weights_with_0_penalty = 
+    ridge_regression_gradient_descent(feature_matrix,
+        output_matrix,
+        initial_weights,
+        step_size,
+        l2_penalty = 0,
+        tolerance)

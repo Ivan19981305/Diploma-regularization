@@ -1,0 +1,24 @@
+lasso_cyclical_coordinate_descent <- function(data_matrix, initial_weights,
+	l1_penalty, tolerance) {
+	normalized_features <- normalize_features(feature_Matrix = data_matrix[[1]])
+	norms <- normalized_features[[2]]
+	converged <- FALSE
+	weights <- initial_weights
+	new_weights <- vector(length = length(weights))
+	while (!converged) {
+		old_weights <- weights
+		for (i in 1:length(weights)) {
+			weights[i] <- lasso_coordinate_descent_step(i = i,
+				data_matrix = data_matrix, weights = weights,
+				l1_penalty = l1_penalty)
+		}
+		delta <- vector()
+		for (i in 1:length(weights)) {
+			delta[i] <- old_weights[i] - weights[i]
+		}
+		if (max(abs(delta)) < tolerance) {
+			converged <- TRUE
+		}
+	}
+	weights/norms
+}

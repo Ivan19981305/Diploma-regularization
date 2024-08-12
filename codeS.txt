@@ -1,0 +1,53 @@
+import csv
+
+diseaseSymptoms = list()
+disease = list()
+
+with open('Heart Disease Dataset.csv', newline='') as csvfile:
+    datasetreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+    for row in datasetreader:
+        new_row = list()
+        for smth in row:
+            new_smth = smth.strip()
+            if (new_smth != ''):
+                new_row.append(new_smth)
+        if (new_row[0] != 'age'):
+            disease.append(new_row[-1])
+            diseaseSymptoms.append(new_row[:-2])
+
+
+from sklearn.model_selection import train_test_split
+
+features_train, features_test, target_train, target_test = train_test_split(
+    diseaseSymptoms, disease, test_size=0.2)
+
+
+import numpy as np
+from sklearn.linear_model import SGDClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
+clf = make_pipeline(StandardScaler(), SGDClassifier(max_iter=1000, penalty = 'none'))
+clf.fit(features_train, target_train)
+
+clf2 = make_pipeline(StandardScaler(), SGDClassifier(max_iter=1000, penalty = 'l1'))
+clf2.fit(features_train, target_train)
+
+clf3 = make_pipeline(StandardScaler(), SGDClassifier(max_iter=1000, penalty = 'l2'))
+clf3.fit(features_train, target_train)
+
+
+from sklearn.metrics import accuracy_score
+
+print(accuracy_score(clf.predict(features_test), target_test))
+
+print(accuracy_score(clf2.predict(features_test), target_test))
+
+print(accuracy_score(clf3.predict(features_test), target_test))
+
+
+from sklearn.metrics import confusion_matrix
+
+print(confusion_matrix(target_test, clf.predict(features_test))/len(target_test))
+print(confusion_matrix(target_test, clf2.predict(features_test))/len(target_test))
+print(confusion_matrix(target_test, clf3.predict(features_test))/len(target_test))

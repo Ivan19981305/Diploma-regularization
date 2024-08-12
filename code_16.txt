@@ -1,0 +1,6 @@
+ridge_train = glmnet(x = 
+	train_features, y = train_output, alpha = 0)
+ridge_ideal_lambda_coef <- 
+		predict(ridge_train, type = "coefficients",
+	s = ideal_lambda)
+ridge_ideal_lambda_coef[, 1]

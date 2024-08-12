@@ -1,0 +1,16 @@
+lasso_coordinate_descent_step <- function(i, data_matrix, weights,
+	l1_penalty) {
+	normalized_features <- normalize_features(feature_Matrix = data_matrix[[1]])
+	rho <- get_ro(normalized_features, data_matrix[[2]], weights,
+		i)
+	if (i == 1) {
+		new_weight_i <- rho
+	} else if (rho < -l1_penalty/2) {
+		new_weight_i <- rho + l1_penalty/2
+	} else if (rho > l1_penalty/2) {
+		new_weight_i <- rho - l1_penalty/2
+	} else {
+		new_weight_i <- 0
+	}
+	return(new_weight_i)
+}
